@@ -1,0 +1,44 @@
+<html>
+<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div for="area1">Before:</div>
+    <textarea id='area1' style="width:90%;height:400px;"></textarea>
+    <hr>
+    <button id=switch>Switch</button>
+    <hr>
+    <div for="area2">After:</div>
+    <textarea id='area2' style="width:90%;height:400px;"></textarea>
+    <div for="area2">LOG:</div>
+    <textarea id='area3' style="width:90%;height:200px;"></textarea>
+    <script src="jquery-3.4.1.min.js"></script>
+    <script>
+        $('#switch').click(function () {
+            let list = $('#area1').val().split('\n');
+            let ret = []
+            let log = []
+            // console.log(list,list.length)
+            for (let i = 0; i < list.length; i++) {
+                let val = list[i].trim();
+                let sp=val.split('@')
+                if (val.length < 2 || (val[0] == '/' && val[1] == '/')||sp.length!=2) {
+                    ret.push('//-------------');
+                    log.push(val);
+                }
+                else {
+                    ret.push(sp[1]+'@'+sp[0]);
+                }
+            }
+            //--------------------------------------
+            // console.log(ret)
+            // console.log(log)
+            $('#area2').val(ret.join('\n'));
+            $('#area3').val(log.join('\n'));
+
+        })
+    </script>
+</body>
+
+</html>
