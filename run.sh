@@ -1,3 +1,5 @@
+#!/usr/bin/bash
+
 clear
 rm -f *.pyc designs/*.pyc modules/*.pyc
 rm -frd designs/__pycache__ modules/__pycache__
