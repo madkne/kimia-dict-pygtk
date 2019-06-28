@@ -12,7 +12,7 @@ class SearchDB():
     # ---------------------------------------------------
     # =>get name of a database and by its type,search it and return result
     def search_in_databases(self, name: str, text: str, lang: str, count: int):
-        print('search in database:'+name+','+text+','+lang)
+        # print('search in database:'+name+','+text+','+lang)
         result = models.dbresult(text)
         # print('RESULT:',id(result), str(result))
         try:

@@ -36,8 +36,30 @@ class lblstruct:
         return "(lblstruct)[name:{0},align:{1}]".format(self.text,str(self.align))
 
 # *******************************************
-
-
+class wordb:
+    words=[]
+    cur_pos=0
+    @staticmethod
+    def append(words,word:str,cur_pos:int):
+        if cur_pos>=0: words=words[0:cur_pos+1]
+        lenw=len(words)
+        if lenw==0 or words[lenw-1]!=word: words.append(word)
+        return words,cur_pos+1
+    @staticmethod
+    def back(words:[],cur_pos:int):
+        if cur_pos>0: cur_pos-=1
+        word=''
+        if len(words)>0: word=words[cur_pos]
+        return word,cur_pos
+    @staticmethod
+    def forward(words:[],cur_pos:int):
+        if cur_pos<len(words)-1:cur_pos+=1
+        word=''
+        if len(words)>0: word=words[cur_pos]
+        return word,cur_pos
+    def info(self):
+        return "count:{0},current:{1}\nwords:{2}".format(len(self.words),self.cur_pos,str(self.words))
+# *******************************************
 class dbresult:
     id=0
     dict_name = ''

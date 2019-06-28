@@ -7,7 +7,7 @@ gi.require_version('Keybinder', '3.0')
 # ----------------------------------------
 from gi.repository import Gtk, Gdk, Keybinder
 from designs import menu, search
-from modules import _global as glob
+from modules import _global as glob,models
 # from memory_profiler import profile
 
 
@@ -60,19 +60,17 @@ class MainWindow(Gtk.Window):
         self.hide()
         return True
     # ---------------------------------------------------
-    # def show_window(self, data=None):
-    #     print('Show again main window')
-    #     self.show_all()
-    #     return True
-    # ---------------------------------------------------
-    def show_shortcut_callback(self, keystr, user_data):
+    def show_window(self, data=None):
         print('Show again main window')
-        print("Handling", user_data)
-        print("Event time:", Keybinder.get_current_event_time())
         self.show_all()
         # print('childs:',self.get_children()[0].get_children()[1].get_children()[0])
-        self.get_children()[0].get_children()[1].get_children()[0].activate()
+        search.SearchTxt.activate()
         return True
+    # ---------------------------------------------------
+    def show_shortcut_callback(self, keystr, user_data):
+        print("Handling", user_data)
+        print("Event time:", Keybinder.get_current_event_time())
+        return self.show_window()
     # ---------------------------------------------------
     def on_key_press_event(self,widget,event):
         keyval = event.keyval
@@ -80,7 +78,7 @@ class MainWindow(Gtk.Window):
         state = event.state
         ctrl = (state & Gdk.ModifierType.CONTROL_MASK)
         alt=(state & Gdk.ModifierType.MOD1_MASK)
-        print('Key pressed:keyval:{0},ctrl:{1},alt:{2}'.format(keyval_name,ctrl,alt))
+        # print('Key pressed:keyval:{0},ctrl:{1},alt:{2}'.format(keyval_name,ctrl,alt))
         # print(self.get_children()[0].get_children()[1].get_children()[0])
         if keyval_name == "Escape":
             self.on_delete()
@@ -100,7 +98,6 @@ def main():
     window = MainWindow()
     # =>set try icon
     tray = menu.TryIcon(window)
-
     Gtk.main()
 # ---------------------------------------------------
 if __name__ == '__main__': main()

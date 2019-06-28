@@ -22,14 +22,9 @@ class SearchBox(Gtk.Box):
     # ---------------------------------------------------
     def __init__(self):
         Gtk.Box.__init__(self)
-        #=>define a entry textbox
-        SearchTxt = Gtk.Entry(
-            activates_default=True,
-            input_hints=Gtk.InputHints.LOWERCASE,
-            placeholder_text="Search any Word/Term...",
-            shadow_type=Gtk.ShadowType.ETCHED_OUT
-        )
-        # SearchTxt.set_activates_default(True)
+        #=>define a entry textbox properties
+        SearchTxt.set_activates_default(True)
+        SearchTxt.set_placeholder_text("Search any Word/Term...")
         # SearchTxt.set_active(True)
         #=>handle 'key_release' event of button
         SearchTxt.connect('key_release_event',
@@ -45,8 +40,7 @@ class SearchBox(Gtk.Box):
     # ---------------------------------------------------
     # =>KeyRelease event for searchtxt
     def searchtxt__KeyRelease__event(self, widget, event):
-        print('search entry...'+widget.get_text() +
-              '...'+str(event.hardware_keycode))
+        # print('search entry...'+widget.get_text() +'...'+str(event.hardware_keycode))
         self.SearchValue = widget.get_text()
         if event.hardware_keycode == 36:  # ENTER press key
             self.search(widget.get_text())
@@ -57,13 +51,17 @@ class SearchBox(Gtk.Box):
         self.search(self.SearchValue)
     # ---------------------------------------------------
     # =>main search function
-    def search(self, text):
+    @staticmethod
+    def search(text:str,isnew:bool=True):
         #=>define vars
         results = [] #=>define results list for show
         dict_count=0 #=>count of found result dicts
         #=>convert text to trim and lowercase
         text = text.strip().lower()
         print('search:'+text+'$')
+        #append to WORDB
+        if isnew:
+            glob.WORDB,glob.WORDBPOS=models.wordb.append(glob.WORDB,text,glob.WORDBPOS)
         #=>if text be null or '', then return Nothing!
         if len(text) == 0:
             return
@@ -78,6 +76,7 @@ class SearchBox(Gtk.Box):
             if res.dict_type == '':
                 print('not exist db...')
                 continue
+            print('searched in database:'+dic.name)
             #=>append result to 'results' list
             results.append(res)
             #=>if found anything!

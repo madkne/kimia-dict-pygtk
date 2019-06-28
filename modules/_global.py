@@ -2,8 +2,9 @@
 from modules import models
 
 
-VERSION="0.49"
+VERSION="0.64"
 LANG="en"
+APPNAME="KimiaDict"
 PROGRAMMER="madkne"
 STARTED="2019.6.24"
 VERSION1="0.48-2019.6.26"
@@ -16,6 +17,9 @@ DICTIONARIES=[
     models.dictionaries('terms_dict', 0),
     models.dictionaries('medical_dict', 0)
 ]
+
+WORDB=[]
+WORDBPOS=-1
 
 '''
 window shortcut:
